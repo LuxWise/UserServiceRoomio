@@ -5,7 +5,7 @@ RUN mvn dependency:go-offline
 COPY src ./src
 RUN mvn clean package -DskipTests
 
-FROM openjdk:17-jdk-slim
+FROM amazoncorretto:17-alpine3.21-jdk
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8081

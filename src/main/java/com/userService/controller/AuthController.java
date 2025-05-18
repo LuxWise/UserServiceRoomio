@@ -16,9 +16,9 @@ public class AuthController {
 
     private final AuthService authService;
 
-    @GetMapping("/hello")
+    @GetMapping("/health")
     public ResponseEntity<String> hello() {
-        return ResponseEntity.ok("Hello from Auth Service");
+        return ResponseEntity.ok("User Service is running");
     }
 
     @PostMapping("/login")
