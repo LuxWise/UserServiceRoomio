@@ -1,34 +1,41 @@
 package com.userService.model.Users;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name = "Users", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "email")
-})
+@Table(name = "users")
 public class Users implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer user_id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
-    @Column(nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(name = "lastname", nullable = false)
     private String lastname;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
+    @Column(name = "phone", nullable = false)
     private String phone;
 
-    @Column(nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
 
     @Column(name = "failed_login_attempts")
@@ -44,53 +51,6 @@ public class Users implements UserDetails {
     @JoinColumn(name = "role_id", nullable = false)
     private Roles role;
 
-    // ======= GETTERS Y SETTERS =======
-
-    public Integer getUser_id() { return user_id; }
-
-    public void setUser_id(Integer user_id) { this.user_id = user_id; }
-
-    public String getName() { return name; }
-
-    public void setName(String name) { this.name = name; }
-
-    public String getLastname() { return lastname; }
-
-    public void setLastname(String lastname) { this.lastname = lastname; }
-
-    public String getEmail() { return email; }
-
-    public void setEmail(String email) { this.email = email; }
-
-    public String getPhone() { return phone; }
-
-    public void setPhone(String phone) { this.phone = phone; }
-
-    public String getPassword() { return password; }
-
-    public void setPassword(String password) { this.password = password; }
-
-    public Integer getFailedLoginAttempts() { return failedLoginAttempts; }
-
-    public void setFailedLoginAttempts(Integer failedLoginAttempts) { this.failedLoginAttempts = failedLoginAttempts; }
-
-    public Boolean getAccountLocked() { return accountLocked; }
-
-    public void setAccountLocked(Boolean accountLocked) { this.accountLocked = accountLocked; }
-
-    public Boolean getPasswordChanged() { return passwordChanged; }
-
-    public void setPasswordChanged(Boolean passwordChanged) { this.passwordChanged = passwordChanged; }
-
-    public Roles getRole() { return role; }
-
-    public void setRole(Roles role) { this.role = role; }
-
-    public boolean isAccountLocked() {
-        return accountLocked;
-    }
-
-    // Métodos de UserDetails
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();
@@ -108,7 +68,7 @@ public class Users implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return !accountLocked;
+        return !Boolean.TRUE.equals(accountLocked);
     }
 
     @Override

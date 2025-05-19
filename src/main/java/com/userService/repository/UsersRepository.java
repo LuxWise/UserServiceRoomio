@@ -7,15 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import java.util.Optional;
+import java.util.UUID;
 
 
 @Repository
-public interface UsersRepository extends JpaRepository<Users, Integer> {
+public interface UsersRepository extends JpaRepository<Users, UUID> {
     Optional<Users> findByEmail(String email);
-
-    @Query("SELECT SearchRole(u.role,u.user_id) " +
-            "FROM Users u " +
-            "JOIN u.role r " +
-            "WHERE u.user_id = :user_id")
-    SearchRole findUserRoleById(@Param("user_id") Long userId);
 }
