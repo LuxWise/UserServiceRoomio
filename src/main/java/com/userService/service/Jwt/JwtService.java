@@ -22,6 +22,9 @@ public class JwtService {
     }
 
     private String getToken(HashMap<String,Object> extraClaims, Users user) {
+        extraClaims.put("email", user.getEmail());
+        extraClaims.put("role", user.getRole().getRole_name());
+
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
