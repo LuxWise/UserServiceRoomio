@@ -27,7 +27,7 @@ public class AuthService {
         Users user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new BadCredentialsException("Bad credentials"));
 
-        if (user.isAccountLocked()) {
+        if (user.getAccountLocked()) {
             throw new LockedException("locked account.Change password.");
         }
 
