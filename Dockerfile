@@ -7,7 +7,13 @@ RUN mvn clean package -DskipTests
 
 FROM amazoncorretto:17-alpine3.21-jdk
 WORKDIR /app
+
+RUN apk update && apk add --no-cache netcat-openbsd
+
 COPY --from=build /app/target/*.jar app.jar
+COPY wait-for-it.sh .
+RUN chmod +x wait-for-it.sh
+
 EXPOSE 8081
 ENV JWT_SECRET=${JWT_SECRET}
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["sh","./wait-for-it.sh","rabbitmq:5672","--","java", "-jar", "app.jar"]
