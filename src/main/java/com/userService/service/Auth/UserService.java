@@ -1,6 +1,6 @@
 package com.userService.service.Auth;
 
-import com.userService.model.Users.Users;
+import com.userService.model.Users;
 import com.userService.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -17,7 +17,6 @@ public class ApplicationConfig {
 
     private final UserDetailsServiceImpl userDetailsService;
 
-
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();

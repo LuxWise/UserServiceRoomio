@@ -1,4 +1,4 @@
-package com.userService.model.Users;
+package com.userService.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -39,13 +41,19 @@ public class Users implements UserDetails {
     private String password;
 
     @Column(name = "failed_login_attempts")
-    private Integer failedLoginAttempts;
+    private Integer failedLoginAttempts = 0;
 
     @Column(name = "account_locked")
-    private Boolean accountLocked;
+    private Boolean accountLocked = false;
 
     @Column(name = "password_changed")
-    private Boolean passwordChanged;
+    private Boolean passwordChanged = false;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
     @ManyToOne
     @JoinColumn(name = "role_id", nullable = false)
